@@ -1,0 +1,119 @@
+// +build integration
+
+package proxy
+
+import (
+	"io/ioutil"
+	"net/http"
+	"testing"
+
+	"github.com/hellofresh/janus/pkg/router"
+	"github.com/hellofresh/janus/pkg/test"
+	"github.com/hellofresh/stats-go"
+	log "github.com/sirupsen/logrus"
+	"github.com/stretchr/testify/assert"
+)
+
+var tests = []struct {
+	description         string
+	method              string
+	url                 string
+	expectedContentType string
+	expectedCode        int
+}{
+	{
+		description:         "Get example route",
+		method:              "GET",
+		url:                 "/example",
+		expectedContentType: "application/json; charset=utf-8",
+		expectedCode:        http.StatusOK,
+	}, {
+		description:         "Get invalid route",
+		method:              "GET",
+		url:                 "/invalid-route",
+		expectedContentType: "text/plain; charset=utf-8",
+		expectedCode:        http.StatusNotFound,
+	},
+	{
+		description:         "Get one posts - strip path",
+		method:              "GET",
+		url:                 "/posts/1",
+		expectedContentType: "application/json; charset=utf-8",
+		expectedCode:        http.StatusOK,
+	},
+	{
+		description:         "Get one posts - append path",
+		method:              "GET",
+		url:                 "/append",
+		expectedContentType: "application/json; charset=utf-8",
+		expectedCode:        http.StatusOK,
+	},
+}
+
+func TestSuccessfulProxy(t *testing.T) {
+	log.SetOutput(ioutil.Discard)
+
+	ts := test.NewServer(createRegisterAndRouter())
+	defer ts.Close()
+
+	for _, tc := range tests {
+		res, err := ts.Do(tc.method, tc.url, make(map[string]string))
+		assert.NoError(t, err)
+		if res != nil {
+			defer res.Body.Close()
+		}
+
+		assert.Equal(t, tc.expectedContentType, res.Header.Get("Content-Type"))
+		assert.Equal(t, tc.expectedCode, res.StatusCode, tc.description)
+	}
+}
+
+func createProxyDefinitions() []*Definition {
+	return []*Definition{
+		{
+			ListenPath: "/example/*",
+			Upstreams: &Upstreams{
+				Balancing: "roundrobin",
+				Targets:   []*Target{&Target{Target: "http://www.mocky.io/v2/58c6c60710000040151b7cad"}},
+			},
+			Methods: []string{"ALL"},
+		},
+		{
+			ListenPath: "/posts/*",
+			StripPath:  true,
+			Upstreams: &Upstreams{
+				Balancing: "roundrobin",
+				Targets:   []*Target{&Target{Target: "https://jsonplaceholder.typicode.com/posts"}},
+			},
+			Methods: []string{"ALL"},
+		},
+		{
+			ListenPath:  "/append/*",
+			UpstreamURL: "http://www.mocky.io/v2/58c6c60710000040151b7cad",
+			AppendPath:  true,
+			Upstreams:   &Upstreams{},
+			Methods:     []string{"GET"},
+		},
+	}
+}
+
+func createRegisterAndRouter() router.Router {
+	r := router.NewChiRouter()
+	createRegister(r)
+	return r
+}
+
+func createRegister(r router.Router) *Register {
+	var routes []*Route
+
+	definitions := createProxyDefinitions()
+	for _, def := range definitions {
+		routes = append(routes, NewRoute(def))
+	}
+
+	statsClient, _ := stats.NewClient("noop://", "")
+	register := NewRegister(r, Params{StatsClient: statsClient})
+	register.AddMany(routes)
+
+	return register
+}

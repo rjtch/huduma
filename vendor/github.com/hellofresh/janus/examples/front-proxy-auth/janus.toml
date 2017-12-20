@@ -1,0 +1,20 @@
+################################################################
+# Global configuration
+################################################################
+port = 8080
+logLevel = "debug"
+
+################################################################
+# API configuration backend
+################################################################
+[web]
+  port = 8081
+
+  [web.credentials]
+    secret = "secret"
+
+    [web.credentials.basic]
+    users = {admin = "admin"}
+
+[database]
+  dsn = "file:///etc/janus"

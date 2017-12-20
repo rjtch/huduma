@@ -1,0 +1,10 @@
+package: github.com/huduma
+import: 
+  - package: github.com/spf13/cobra
+  - package: github.com/spf13/viper
+  - package: github.com/sirupsen/logrus
+  - package: github.com/labstack/echo
+  - package: github.com/hellofresh/janus/pkg/response
+  - package: github.com/pressly/chi
+  - package: github.com/pkg/errors
+  
