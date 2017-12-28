@@ -1,9 +1,11 @@
 package main
 
-import (
-	"github.com/spf13/cobra/cobra/cmd"
-)
+import "fmt"
 
 func main() {
-	cmd.Execute()
+
+	if err := RootCommand().Execute(); err != nil {
+		fmt.Println(err)
+	}
+
 }
