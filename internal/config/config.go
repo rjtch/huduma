@@ -3,6 +3,9 @@ package config
 import (
 	"fmt"
 	"strings"
+	"time"
+
+	"github.com/kelseyhightower/envconfig"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
@@ -10,8 +13,10 @@ import (
 
 //Config is the structur of configutation
 type Config struct {
-	Port    int       `json:"port"`
-	LogConf LogConfig `mapstructur:"log_config"`
+	Port    int           `envconfig:"PORT"`
+	Timeout time.Duration `envconfig:"TIMEOUT"`
+	LogConf LogConfig
+	Host    string `envconfig:"HOST"`
 }
 
 //Load loads all commands settings
@@ -35,7 +40,7 @@ func Load(configFile string) (*Config, error) {
 		_, ok := err.(viper.ConfigFileNotFoundError)
 
 		if !ok {
-			return nil, errors.Wrap(err, "reading config from files")
+			return nil, errors.Wrap(err, "error when reading config from files")
 		}
 		return nil, err
 	}
@@ -47,4 +52,24 @@ func Load(configFile string) (*Config, error) {
 		return nil, errors.Wrap(err, "Unmarschalling config")
 	}
 	return &configur, nil
+}
+
+//LoadEnv loads configuration from environment variables
+func LoadEnv() (*Config, error) {
+
+	var conf Config
+
+	//Default loading
+	err := viper.Unmarshal(&conf)
+	if err != nil {
+		return nil, err
+	}
+
+	err = envconfig.Process("", &conf)
+	if err != nil {
+		return nil, err
+	}
+
+	return &conf, nil
+
 }

@@ -1,6 +1,8 @@
-hash: 67976278c28a698e8bfd730325c28143311dc9e9834e342abc028304f6d16857
-updated: 2017-10-28T20:33:09.791883963+02:00
+hash: a73e810d0cfeee31de400858f622cfc11ae97e113e6aabcc3dda0715932fc8e1
+updated: 2018-01-09T14:04:04.410538+01:00
 imports:
+- name: github.com/bshuster-repo/logrus-logstash-hook
+  version: ebf008572634916f3a9433d9471a0cd3f68fc772
 - name: github.com/fsnotify/fsnotify
   version: 4da3e2cfbabc9f751898f250b49f2439785783a1
 - name: github.com/go-chi/chi
@@ -20,24 +22,30 @@ imports:
   version: 805aaccf6ecc65a7acc18d8c3f20087bacefe789
   subpackages:
   - pkg/response
+- name: github.com/hellofresh/logging-go
+  version: 35bfe83a93eda5dae5d5dee7c3e102a599f2f327
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/kelseyhightower/envconfig
+  version: f611eb38b3875cc3bd991ca91c51d06446afa14c
 - name: github.com/labstack/echo
   version: b28538b2e3f5446fe6e0e47ee34cd74b662ca2ab
 - name: github.com/magiconair/properties
   version: 8d7837e64d3c1ee4e54a880c5a920ab4316fc90a
 - name: github.com/mitchellh/mapstructure
   version: d0303fe809921458f417bcf828397a65db30a7e4
+- name: github.com/pborman/uuid
+  version: e533369306653d193b93dae055f6083cbf8ba54f
 - name: github.com/pelletier/go-toml
   version: 2009e44b6f182e34d8ce081ac2767622937ea3d4
 - name: github.com/pkg/errors
   version: f15c970de5b76fac0b59abb32d62c17cc7bed265
 - name: github.com/pressly/chi
   version: 8dfd99e5cd5a43ce0fd1f00c8840942d7c32a743
-  subpackages:
-  - middleware
 - name: github.com/sirupsen/logrus
   version: 89742aefa4b206dcf400792f3bd35b542998eb3b
+  subpackages:
+  - hooks/syslog
 - name: github.com/spf13/afero
   version: e67d870304c4bca21331b02f414f970df13aa694
   subpackages:
@@ -66,6 +74,17 @@ imports:
   subpackages:
   - transform
   - unicode/norm
+- name: gopkg.in/gemnasium/logrus-graylog-hook.v2
+  version: daf02e0efe6f4dee3f7085184f5d527cf5cf0f6b
+- name: gopkg.in/go-playground/validator.v8
+  version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
+- name: gopkg.in/mgo.v2
+  version: 3f83fa5005286a7fe593b055f0d7771a7dce4655
+  subpackages:
+  - bson
+  - internal/json
+  - internal/sasl
+  - internal/scram
 - name: gopkg.in/yaml.v2
   version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
 testImports: []

@@ -4,11 +4,13 @@ import (
 	"log"
 
 	"github.com/huduma/internal/config"
+	"github.com/huduma/internal/mongo"
 )
 
 var (
 	globalConfig *config.Config
 	configFile   string
+	session      *mongo.BooksDB
 )
 
 func initConf() {
@@ -22,4 +24,8 @@ func initConf() {
 		log.Fatal("failed to configur logging" + " " + err.Error())
 	}
 	logger.Info("starting config with", globalConfig)
+}
+
+func initDB() {
+
 }

@@ -1,10 +1,17 @@
 package: github.com/huduma
-import: 
-  - package: github.com/spf13/cobra
-  - package: github.com/spf13/viper
-  - package: github.com/sirupsen/logrus
-  - package: github.com/labstack/echo
-  - package: github.com/hellofresh/janus/pkg/response
-  - package: github.com/pressly/chi
-  - package: github.com/pkg/errors
-  
+import:
+- package: github.com/spf13/cobra
+- package: github.com/spf13/viper
+- package: github.com/sirupsen/logrus
+- package: github.com/labstack/echo
+- package: github.com/hellofresh/janus
+  subpackages:
+  - pkg/response
+- package: github.com/pressly/chi
+- package: github.com/pkg/errors
+- package: github.com/pborman/uuid
+- package: github.com/go-chi/chi
+- package: github.com/kelseyhightower/envconfig
+  version: ~1.3.0
+- package: github.com/hellofresh/logging-go
+  version: ~0.1.6
