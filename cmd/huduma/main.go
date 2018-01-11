@@ -45,8 +45,8 @@ func main() {
 //RunServer is a our cobra command
 func RunServer(cmd *cobra.Command, args []string) {
 
+	//init()
 	log.Info("Huduma is starting ...")
-	//initConf()
 
 	log.Info("Start initializing mongo")
 	dbDialTimeout := 20 * time.Second
