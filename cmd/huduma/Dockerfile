@@ -5,7 +5,7 @@ FROM golang:1.9.2-alpine3.6 As build
 #tools required to build the project.
 #`docker build --no-cache` is used to update those dependencies.
 RUN apk add --no-cache git
-RUN go get github.com/rjtch/huduma
+RUN go get github.com/rjtch/huduma/cmd/huduma
 
 #Gopkg.toml and Gopkg.lock list all project dependencies.
 #This layer will only be re-built and reused when Gopkg files are updated
