@@ -5,7 +5,6 @@ import (
 
 	"github.com/huduma/internal/config"
 	"github.com/huduma/internal/mongo"
-	"github.com/spf13/cobra"
 )
 
 var (
@@ -28,13 +27,5 @@ func initConf() {
 }
 
 func initDB() {
-
-}
-
-func init() {
-	cobra.OnInitialize(initConf)
-	rootCommand.PersistentFlags().StringP("config", "C", "", "An explicit config file to use")
-	rootCommand.Flags().IntP("port", "p", 0, "the port to do things on")
-	rootCommand.AddCommand(&versionCmd)
 
 }

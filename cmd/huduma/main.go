@@ -20,6 +20,8 @@ var (
 	db     *mongo.BooksDB
 )
 
+var versions string
+
 var (
 	rootCommand = &cobra.Command{
 		Use:   "huduma",
@@ -32,22 +34,32 @@ var (
 		`,
 		Run: RunServer,
 	}
+
+	versionCmd = cobra.Command{
+		Run: version,
+		Use: "version",
+	}
 )
 
-func main() {
-	if err := rootCommand.Execute(); err != nil {
-		fmt.Print(err)
-		os.Exit(-1)
-	}
+func version(cmd *cobra.Command, args []string) {
+	fmt.Println("1.0.0", versions)
+}
+
+//initialization loop
+//Init initialize the rootcommand
+func Init() {
+	cobra.OnInitialize()
+	rootCommand.PersistentFlags().StringP("config", "C", "", "An explicit config file to use")
+	rootCommand.Flags().IntP("port", "p", 0, "the port to do things on")
+	rootCommand.AddCommand(&versionCmd)
 
 }
 
 //RunServer is a our cobra command
 func RunServer(cmd *cobra.Command, args []string) {
 
-	//init()
+	//Init()
 	log.Info("Huduma is starting ...")
-
 	log.Info("Start initializing mongo")
 	dbDialTimeout := 20 * time.Second
 	//shutDownTimeout := 5 * time.Second
@@ -81,7 +93,17 @@ func RunServer(cmd *cobra.Command, args []string) {
 
 	log.Info("Huduma started successfully")
 
+	wg.Wait()
+	log.Println("main : Conpleted")
+
 	/**
 	I will add later more logic hier to enable huduma to handle requests on incoming TLS connection
 	**/
+}
+
+func main() {
+	if err := rootCommand.Execute(); err != nil {
+		fmt.Print(err)
+		os.Exit(-1)
+	}
 }

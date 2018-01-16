@@ -1,0 +1,12 @@
+version '3'
+services:
+ huduma: 
+    image: /cmd/huduma
+    ports: 
+      - "3000:3000"
+ mongo: 
+    image: /internal/mongo
+    ports:
+      - "8080:8080"
+
+
