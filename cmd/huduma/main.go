@@ -61,7 +61,7 @@ func RunServer(cmd *cobra.Command, args []string) {
 	//Init()
 	log.Info("Huduma is starting ...")
 	log.Info("Start initializing mongo")
-	dbDialTimeout := 20 * time.Second
+	dbDialTimeout := 200 * time.Second
 	//shutDownTimeout := 5 * time.Second
 	host := os.Getenv("HOST")
 	if host == "" {

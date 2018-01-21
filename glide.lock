@@ -1,8 +1,8 @@
-hash: a73e810d0cfeee31de400858f622cfc11ae97e113e6aabcc3dda0715932fc8e1
-updated: 2018-01-09T14:04:04.410538+01:00
+hash: 7bfe5d17e04250d42423eeb96b68335a3857a13548a1bf71288fc3608acdbe7f
+updated: 2018-01-16T15:43:52.940077+01:00
 imports:
-- name: github.com/bshuster-repo/logrus-logstash-hook
-  version: ebf008572634916f3a9433d9471a0cd3f68fc772
+- name: github.com/dimfeld/httptreemux
+  version: 8cc36ee10f84b82d0742ffcab770815c7d3f9ad7
 - name: github.com/fsnotify/fsnotify
   version: 4da3e2cfbabc9f751898f250b49f2439785783a1
 - name: github.com/go-chi/chi
@@ -44,8 +44,6 @@ imports:
   version: 8dfd99e5cd5a43ce0fd1f00c8840942d7c32a743
 - name: github.com/sirupsen/logrus
   version: 89742aefa4b206dcf400792f3bd35b542998eb3b
-  subpackages:
-  - hooks/syslog
 - name: github.com/spf13/afero
   version: e67d870304c4bca21331b02f414f970df13aa694
   subpackages:
@@ -74,8 +72,6 @@ imports:
   subpackages:
   - transform
   - unicode/norm
-- name: gopkg.in/gemnasium/logrus-graylog-hook.v2
-  version: daf02e0efe6f4dee3f7085184f5d527cf5cf0f6b
 - name: gopkg.in/go-playground/validator.v8
   version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
 - name: gopkg.in/mgo.v2

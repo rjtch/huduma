@@ -9,6 +9,8 @@ import (
 	mgo "gopkg.in/mgo.v2"
 )
 
+const collectionName string = "book_specs"
+
 type (
 
 	//BooksDB represents the controller for operating on the book ressource
